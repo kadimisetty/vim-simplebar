@@ -1,5 +1,14 @@
 
 
+NEEDED:
+x - Mode
+x - Unsaved
+x - Location
+x - FileName
+x - FileType
+x - Unix
+x - Line+Col
+
 
 
 
@@ -29,15 +38,3 @@ __Ⓝ __  filename.md❗                    ↕50📍 7·38
 ✎ utf8
 ✏ 
 ✐ 
-
-NEEDED:
-Mode
-Unsaved
-Location
-FileName
-FileType
-Unix
-Line+Col
-
-
-
