@@ -82,43 +82,33 @@ function! PrettyBufferNumber(current_buffer_number)
 endfunction
 
 
+
 "Set the status line
-function! SetSimplebarStatusLine()
+if has('statusline')
     let &statusline=""
     " Switch color to the LineNr highlight group
     let &statusline.="%1*"
     " let &statusline.="  ⒙" | "🚫
-    
     " @TODO: %L matched with gutter width + fold column width
-
     " File name
     let &statusline.=" %20f"
-
-
     " Modified Buffer?
     " let &statusline.="\ %{&modified==0?'':'❗'} "
     " let &statusline.="\ %{&modified==0?'':'✎'} "
     let &statusline.="\ %{&modified==0?'':'✏'} "
-
-
     " Switch color to the Comment highlight group
     let &statusline.="%2*"
-    
-    
     " @TODO: Add fugitive support to get curent branch name etc.
     " Show the git branch 
     " let &statusline.=" ψ master "
-    
     " Filetype
     let &statusline.=" %{strlen(&ft)?&ft:'nofilet'}."
     " File Format
     let &statusline.="%{&ff}."
     " File Encoding
     let &statusline.="%{FileEncoding()} "
-                   
     " Show buffer number
     let &statusline.="%{PrettyBufferNumber(bufnr('%'))}"
-
     " Right Align From Here
     let &statusline.="%= "
     " Current position as a percentage and total line numbers
@@ -127,7 +117,6 @@ function! SetSimplebarStatusLine()
     let &statusline.="📍 "
     " Column & Line Positon
     let &statusline.="%(%c·%l%)"
-
     " Flags
     let &statusline.="%h%r%w" 
     " Switch color to the Comment highlight group
@@ -135,12 +124,7 @@ function! SetSimplebarStatusLine()
     " Current Mode
     let &statusline.="%5*%2{PrettyCurrentMode()}  "
 
-
     au InsertEnter * call ModeChanged(v:insertmode)
     au InsertChange * call ModeChanged(v:insertmode)
     au InsertLeave * call ModeChanged(mode())
-
-    call SetSimplebarStatusLine()
-endfunction
-
-
+endif
