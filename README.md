@@ -14,6 +14,17 @@ Looks like this on my terminal.
 Solarized theme on a dark background. 
 ![My image](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/sample.png)
 
+## Elements
+To the left
+* Filename 
+* Modified?
+* filetype.fileformat.encoding 
+* Buffer #
+
+To the right
+* Line Count & Position %
+* Columns & Row 
+* Coloured Mode
 
 ##Requirements
 Work on Vim 7.3, iTerm & OS X Mountain Lion
