@@ -1,4 +1,11 @@
 "Settings
+
+if exists("g:loaded_simplebar_plugin")
+    finish
+endif
+let g:loaded_simplebar_plugin = 1
+
+"Dev settings
 nnoremap <leader>sl :call SetStatusLine()<CR>
 nnoremap <leader>st :source %<CR>
 "
@@ -7,55 +14,28 @@ set laststatus=2
 let g:last_mode=""
 
 
-"Set the status line
-function! SetStatusLine()
-    let &statusline=""
-    " Switch color to the LineNr highlight group
-    let &statusline.="%#LineNr#"
-    " let &statusline.="  ⒙" | "🚫
-    
-    " @TODO: %L matched with gutter width + fold column width
 
-    " File name
-    let &statusline.=" %f"
+"Colors 
+hi default link User1 LineNr
+hi default link User2 Comment
+hi default link User3 Statement
+hi User5 ctermfg=LightGreen ctermbg=NONE cterm=bold
 
-    " Modified Buffer?
-    let &statusline.="\ %{&modified==0?'':'❗'} "
 
-    " Switch color to the Comment highlight group
-    let &statusline.="%#Comment#"
-    
-    
-    " @TODO: Add fugitive support to get curent branch name etc.
-    " Show the git branch 
-    " let &statusline.=" ψ master "
-    
-    " Filetype
-    let &statusline.=" %{strlen(&ft)?&ft:'nofilet'}."
-    " File Format
-    let &statusline.="%{&ff}."
-    " File Encoding
-    let &statusline.="%{FileEncoding()} "
-                   
-    " Show buffer number
-    let &statusline.=" %{PrettyBufferNumber(bufnr('%'))}"
 
-    " Right Align From Here
-    let &statusline.="%= "
-    " Current position as a percentage and total line numbers
-    let &statusline.="↕%L·%p"
-    " Show location unicode symbol
-    let &statusline.="📍 "
-    " Column & Line Positon
-    let &statusline.="%(%c·%l%)"
+" Change the values for User1 color preset depending on mode
+function! ModeChanged(mode)
 
-    " Flags
-    let &statusline.="%h%r%w" 
-    " Switch color to the Comment highlight group
-    let &statusline.="%#Statement#"
-    " Current Mode
-    let &statusline.="%2{PrettyCurrentMode()}  "
-endfunction
+    if     a:mode ==# "n"  | hi User5 ctermfg=LightGreen    ctermbg=NONE   cterm=bold
+    elseif a:mode ==# "i"  | hi User5 ctermfg=Magenta       ctermbg=NONE   cterm=bold
+    elseif a:mode ==# "r"  | hi User5 ctermfg=DarkRed       ctermbg=NONE  cterm=bold
+    elseif a:mode ==# "v" || a:mode ==# "V" || a:mode ==# "^V" 
+                             hi User5 ctermfg=Blue          ctermbg=NONE cterm=bold
+    else                   | hi User5 ctermfg=fg            ctermbg=NONE
+    endif
+
+endfunc
+
 
 
 "Use a symbol to indicate few modes
@@ -71,7 +51,6 @@ function! PrettyCurrentMode()
     endif
 endfunction
 
-
 "Return file enoding used amd tell if theres a DOS bom
 function! FileEncoding()
     if &fenc !~ "^$\|utf-8" || &bomb
@@ -80,7 +59,6 @@ function! FileEncoding()
         return ""
     endif
 endfunction
-
 
 function! PrettyBufferNumber(current_buffer_number)
     let l:bracketed_numbers = [
@@ -102,3 +80,67 @@ function! PrettyBufferNumber(current_buffer_number)
         return a:current_buffer_number
     endif
 endfunction
+
+
+"Set the status line
+function! SetSimplebarStatusLine()
+    let &statusline=""
+    " Switch color to the LineNr highlight group
+    let &statusline.="%1*"
+    " let &statusline.="  ⒙" | "🚫
+    
+    " @TODO: %L matched with gutter width + fold column width
+
+    " File name
+    let &statusline.=" %20f"
+
+
+    " Modified Buffer?
+    " let &statusline.="\ %{&modified==0?'':'❗'} "
+    " let &statusline.="\ %{&modified==0?'':'✎'} "
+    let &statusline.="\ %{&modified==0?'':'✏'} "
+
+
+    " Switch color to the Comment highlight group
+    let &statusline.="%2*"
+    
+    
+    " @TODO: Add fugitive support to get curent branch name etc.
+    " Show the git branch 
+    " let &statusline.=" ψ master "
+    
+    " Filetype
+    let &statusline.=" %{strlen(&ft)?&ft:'nofilet'}."
+    " File Format
+    let &statusline.="%{&ff}."
+    " File Encoding
+    let &statusline.="%{FileEncoding()} "
+                   
+    " Show buffer number
+    let &statusline.="%{PrettyBufferNumber(bufnr('%'))}"
+
+    " Right Align From Here
+    let &statusline.="%= "
+    " Current position as a percentage and total line numbers
+    let &statusline.="↕%L·%p"
+    " Show location unicode symbol
+    let &statusline.="📍 "
+    " Column & Line Positon
+    let &statusline.="%(%c·%l%)"
+
+    " Flags
+    let &statusline.="%h%r%w" 
+    " Switch color to the Comment highlight group
+    let &statusline.="%3*"
+    " Current Mode
+    let &statusline.="%5*%2{PrettyCurrentMode()}  "
+
+
+    au InsertEnter * call ModeChanged(v:insertmode)
+    au InsertChange * call ModeChanged(v:insertmode)
+    au InsertLeave * call ModeChanged(mode())
+
+    call SetSimplebarStatusLine()
+endfunction
+
+
