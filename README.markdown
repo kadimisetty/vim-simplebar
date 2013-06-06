@@ -1,16 +1,17 @@
 # simplebar
 
-A simple and non-attention seeking Vim status line.
 [Sri Kadimisetty](http://sri.io)
 
 
+A simple non-attention-seeking Vim status line. Just the way I like it.
+
+
 Depends on Unicode support for certain characters like the location icon. 
-If you have an OSX system chances are you're good. You might need to check otherwise.
+It's 2012 and your computer probably supports these anyway, but keep that in mind.
 
 
-Here's how it looks on my computer with a dark Solarized scheme. Works just as fine on a light background as well.
+Looks like this on my computer. Dark Solarized scheme. 
 ![My image](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/sample.png)
-
 
 
 ##Requirements
@@ -20,6 +21,11 @@ Work on Vim 7.3, iTerm & OS X Mountain Lion
 ## Installation
 Use your favorite installation method. I suggest Vundle or Pathogen.
 
+
+## Notes
+Alternatives & Inspiration:
+* Vim Poweline
+* NeatStatus etc.
 
 ## License
 GNU LESSER GENERAL PUBLIC LICENSE
