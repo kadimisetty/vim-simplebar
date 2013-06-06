@@ -33,6 +33,8 @@ Work on Vim 7.3, iTerm & OS X Mountain Lion
 ## Installation
 Use your favorite installation method. I suggest Vundle or Pathogen.
 
+To do it manually, copy `./plugin/simplebar.vim` to `~/.vim/plugins directory`.
+
 
 ## Notes
 Alternatives & Inspiration:
