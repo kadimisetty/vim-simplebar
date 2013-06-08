@@ -138,9 +138,9 @@ if has('statusline')
     " Current Mode
     let &statusline.="%5*%2{s:PrettyCurrentMode()}  "
 
-    au InsertEnter * call s:ModeChanged(v:insertmode)
-    au InsertChange * call s:ModeChanged(v:insertmode)
-    au InsertLeave * call s:ModeChanged(mode())
+    au InsertEnter * call ModeChanged(v:insertmode)
+    au InsertChange * call ModeChanged(v:insertmode)
+    au InsertLeave * call ModeChanged(mode())
 
     vnoremap <expr> <SID>CursorLineNrColorVisual CursorLineNrColorVisual()
     nnoremap <script> v v<SID>CursorLineNrColorVisual
