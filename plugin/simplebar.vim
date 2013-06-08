@@ -30,7 +30,7 @@ hi User5 ctermfg=LightGreen ctermbg=NONE cterm=bold
 
 
 " Change the User1 highlight group values based on mode
-function! s:ModeChanged(mode)
+function! ModeChanged(mode)
     if     a:mode ==# "n"  | hi User5 ctermfg=LightGreen    ctermbg=NONE cterm=bold
     elseif a:mode ==# "i"  | hi User5 ctermfg=Magenta       ctermbg=NONE cterm=bold
     elseif a:mode ==# "r"  | hi User5 ctermfg=DarkRed       ctermbg=NONE cterm=bold
@@ -43,7 +43,7 @@ endfunction
 
 
 "Use a symbol to indicate few modes
-function! s:PrettyCurrentMode()
+function! PrettyCurrentMode()
     let l:currentnode = mode()
     if l:currentnode ==# 'n'      | return "ⓝ"
     elseif l:currentnode ==# 'v'  | return "ⓥ"
@@ -56,7 +56,7 @@ function! s:PrettyCurrentMode()
 endfunction
 
 "Return file enoding used amd tell if theres a DOS bom
-function! s:FileEncoding()
+function! FileEncoding()
     if &fenc !~ "^$\|utf-8" || &bomb
         return &fenc . (&bomb ? "-bom" : "" )
     else
@@ -66,7 +66,7 @@ endfunction
 
 " @TODO - Allow configurable option for buffer number style
 " Return Pretty Buffer Numbers
-function! s:PrettyBufferNumber(current_buffer_number)
+function! PrettyBufferNumber(current_buffer_number)
     let l:encircled_numers_negative = [
                 \ "➊ ", "➋ ", "➌ ", "➍", "➎ ",
                 \ "➏ ", "➐ ", "➑", "➒ ", "➓ ",
@@ -115,13 +115,13 @@ if has('statusline')
     " let &statusline.=" ψ master "
 
     " Show buffer number
-    let &statusline.=" %{s:PrettyBufferNumber(bufnr('%'))}"
+    let &statusline.=" %{PrettyBufferNumber(bufnr('%'))}"
     " Filetype
     let &statusline.=" %{strlen(&ft)?&ft:'no ft'}."
     " File Format
     let &statusline.="%{&ff}."
     " File Encoding
-    let &statusline.="%{s:FileEncoding()} "
+    let &statusline.="%{FileEncoding()} "
     " Flags
     let &statusline.=" %h%r%w " 
     
@@ -136,7 +136,7 @@ if has('statusline')
     " Switch color to the Comment highlight group
     let &statusline.="%3*"
     " Current Mode
-    let &statusline.="%5*%2{s:PrettyCurrentMode()}  "
+    let &statusline.="%5*%2{PrettyCurrentMode()}  "
 
     au InsertEnter * call ModeChanged(v:insertmode)
     au InsertChange * call ModeChanged(v:insertmode)
