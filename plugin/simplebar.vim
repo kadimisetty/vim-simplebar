@@ -120,9 +120,9 @@ if has('statusline')
     " Filetype
     let &statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
     " File Encoding
-    let &statusline.="%{FileEncoding()}"
+    let &statusline.="%{FileEncoding()}."
     " File Format
-    let &statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}."
+    let &statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}"
     " Flags
     let &statusline.=" %h%r%w " 
     
