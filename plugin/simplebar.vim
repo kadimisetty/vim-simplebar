@@ -3,11 +3,11 @@
 " Description:  A simple non-attention-seeking Vim status line.
 " Maintainer:   Sri Kadimisetty <http://sri.io>
 " License:      GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
-" Version:      0.3
+" Version:      0.3.2
 " ============================================================================
 
 
-if exists("g:loaded_simplebar_plugin") || &compatible || v:version < 703
+if exists("g:loaded_simplebar_plugin") || &compatible || v:version < 700
     finish
 endif
 let g:loaded_simplebar_plugin = 1
