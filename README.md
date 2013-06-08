@@ -10,10 +10,10 @@ Depends on Unicode support for certain characters like the location icon.
 It's 2013 and your computer probably supports these anyway, but keep that in mind.
 
 
-Looks like this on my terminal. 
-Solarized theme on a dark background. 
-![My image](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/sample.png)
+## Screenshots
+Solarized dark background
 ![Dark Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/dark-screenshot.png)
+Solarized light background
 ![Light Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/light-screenshot.png)
 
 ## Elements

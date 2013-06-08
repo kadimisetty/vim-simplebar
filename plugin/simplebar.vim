@@ -142,9 +142,4 @@ if has('statusline')
     au InsertEnter * call ModeChanged(v:insertmode)
     au InsertChange * call ModeChanged(v:insertmode)
     au InsertLeave * call ModeChanged(mode())
-
-    vnoremap <expr> <SID>CursorLineNrColorVisual CursorLineNrColorVisual()
-    nnoremap <script> v v<SID>CursorLineNrColorVisual
-    nnoremap <script> V V<SID>CursorLineNrColorVisual
-    nnoremap <script> <C-v> <C-v><SID>CursorLineNrColorVisual
 endif
