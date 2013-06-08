@@ -58,9 +58,9 @@ endfunction
 "Return file enoding used amd tell if theres a DOS bom
 function! FileEncoding()
     if &fenc !~ "^$\|utf-8" || &bomb
-        return &fenc . (&bomb ? "-bom" : "" )
+        return (&fenc?&fenc:'e̶n̶c̶') . (&bomb ? "-bom" : "" )
     else
-        return "e̶n̶c̶"
+        return ""
     endif
 endfunction
 
@@ -115,13 +115,14 @@ if has('statusline')
     " let &statusline.=" ψ master "
 
     " Show buffer number
-    let &statusline.="   %{PrettyBufferNumber(bufnr('%'))}  "
+    let &statusline.="  %{PrettyBufferNumber(bufnr('%'))}  "
+    
     " Filetype
     let &statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
+    " File Encoding
+    let &statusline.="%{FileEncoding()}"
     " File Format
     let &statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}."
-    " File Encoding
-    let &statusline.="%{FileEncoding()} "
     " Flags
     let &statusline.=" %h%r%w " 
     
