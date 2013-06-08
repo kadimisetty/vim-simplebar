@@ -1,6 +1,12 @@
-"Settings
+" ============================================================================
+" File:         simplebar.vim
+" Description:  A simple non-attention-seeking Vim status line.
+" Maintainer:   Sri Kadimisetty <http://sri.io>
+" License:      GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
+" ============================================================================
 
-if exists("g:loaded_simplebar_plugin")
+
+if exists("g:loaded_simplebar_plugin") || &compatible || v:versin < 700
     finish
 endif
 let g:loaded_simplebar_plugin = 1
@@ -8,11 +14,10 @@ let g:loaded_simplebar_plugin = 1
 "Dev settings
 nnoremap <leader>sl :call SetStatusLine()<CR>
 nnoremap <leader>st :source %<CR>
-"
+
 "Always show the status bar
 set laststatus=2 
-let g:last_mode=""
-
+"let g:last_mode=""
 
 
 "Colors 
@@ -22,24 +27,21 @@ hi default link User3 Statement
 hi User5 ctermfg=LightGreen ctermbg=NONE cterm=bold
 
 
-
-" Change the values for User1 color preset depending on mode
-function! ModeChanged(mode)
-
-    if     a:mode ==# "n"  | hi User5 ctermfg=LightGreen    ctermbg=NONE   cterm=bold
-    elseif a:mode ==# "i"  | hi User5 ctermfg=Magenta       ctermbg=NONE   cterm=bold
-    elseif a:mode ==# "r"  | hi User5 ctermfg=DarkRed       ctermbg=NONE  cterm=bold
-    elseif a:mode ==# "v" || a:mode ==# "V" || a:mode ==# "^V" 
-                             hi User5 ctermfg=Blue          ctermbg=NONE cterm=bold
+" Change the User1 highlight group values based on mode
+function! s:ModeChanged(mode)
+    if     a:mode ==# "n"  | hi User5 ctermfg=LightGreen    ctermbg=NONE cterm=bold
+    elseif a:mode ==# "i"  | hi User5 ctermfg=Magenta       ctermbg=NONE cterm=bold
+    elseif a:mode ==# "r"  | hi User5 ctermfg=DarkRed       ctermbg=NONE cterm=bold
+    " @TODO: Visual Mode does not get triggered, need to find a way around it.
+    " elseif a:mode ==# "v" || a:mode ==# "V" || a:mode ==# "^V" 
+    "                          hi User5 ctermfg=Blue          ctermbg=NONE cterm=bold
     else                   | hi User5 ctermfg=fg            ctermbg=NONE
     endif
-
-endfunc
-
+endfunction
 
 
 "Use a symbol to indicate few modes
-function! PrettyCurrentMode()
+function! s:PrettyCurrentMode()
     let l:currentnode = mode()
     if l:currentnode ==# 'n'      | return "ⓝ"
     elseif l:currentnode ==# 'v'  | return "ⓥ"
@@ -52,7 +54,7 @@ function! PrettyCurrentMode()
 endfunction
 
 "Return file enoding used amd tell if theres a DOS bom
-function! FileEncoding()
+function! s:FileEncoding()
     if &fenc !~ "^$\|utf-8" || &bomb
         return &fenc . (&bomb ? "-bom" : "" )
     else
@@ -60,7 +62,15 @@ function! FileEncoding()
     endif
 endfunction
 
-function! PrettyBufferNumber(current_buffer_number)
+" @TODO - Allow configurable option for buffer number style
+" Return Pretty Buffer Numbers
+function! s:PrettyBufferNumber(current_buffer_number)
+    let l:encircled_numers_negative = [
+                \ "➊ ", "➋ ", "➌ ", "➍", "➎ ",
+                \ "➏ ", "➐ ", "➑", "➒ ", "➓ ",
+                \ "⓫", "⓬", "⓭", "⓮", "⓯",
+                \ "⓰", "⓱", "⓲", "⓳", "⓴", 
+                \  ]
     let l:bracketed_numbers = [
                 \ "⑴", "⑵", "⑶", "⑷", "⑸",
                 \ "⑹", "⑺", "⑻", "⑼", "⑽",
@@ -73,14 +83,13 @@ function! PrettyBufferNumber(current_buffer_number)
                 \ "⑪", "⑫", "⑬", "⑭", "⑮", 
                 \ "⑯", "⑰", "⑱", "⑲", "⑳"
                 \ ]
-    let l:pretty_numbers = l:bracketed_numbers
+    let l:pretty_numbers = l:encircled_numbers
     if a:current_buffer_number < len(l:pretty_numbers)
         return l:pretty_numbers[a:current_buffer_number-1]
     else
         return a:current_buffer_number
     endif
 endfunction
-
 
 
 "Set the status line
@@ -93,22 +102,27 @@ if has('statusline')
     " File name
     let &statusline.=" %20f"
     " Modified Buffer?
-    " let &statusline.="\ %{&modified==0?'':'❗'} "
-    " let &statusline.="\ %{&modified==0?'':'✎'} "
     let &statusline.="\ %{&modified==0?'':'✏'} "
-    " Switch color to the Comment highlight group
+
+    " @TODO - Set Read-only flag and show with 🚫
+
+    " Switch color to the Comment highlight group 
     let &statusline.="%2*"
-    " @TODO: Add fugitive support to get curent branch name etc.
-    " Show the git branch 
+    
+    " @TODO: Fugitive support to get curent branch name etc.
     " let &statusline.=" ψ master "
+
+    " Show buffer number
+    let &statusline.=" %{s:PrettyBufferNumber(bufnr('%'))}"
     " Filetype
-    let &statusline.=" %{strlen(&ft)?&ft:'nofilet'}."
+    let &statusline.=" %{strlen(&ft)?&ft:'no ft'}."
     " File Format
     let &statusline.="%{&ff}."
     " File Encoding
-    let &statusline.="%{FileEncoding()} "
-    " Show buffer number
-    let &statusline.="%{PrettyBufferNumber(bufnr('%'))}"
+    let &statusline.="%{s:FileEncoding()} "
+    " Flags
+    let &statusline.=" %h%r%w " 
+    
     " Right Align From Here
     let &statusline.="%= "
     " Current position as a percentage and total line numbers
@@ -117,14 +131,17 @@ if has('statusline')
     let &statusline.="📍 "
     " Column & Line Positon
     let &statusline.="%(%c·%l%)"
-    " Flags
-    let &statusline.="%h%r%w" 
     " Switch color to the Comment highlight group
     let &statusline.="%3*"
     " Current Mode
-    let &statusline.="%5*%2{PrettyCurrentMode()}  "
+    let &statusline.="%5*%2{s:PrettyCurrentMode()}  "
 
-    au InsertEnter * call ModeChanged(v:insertmode)
-    au InsertChange * call ModeChanged(v:insertmode)
-    au InsertLeave * call ModeChanged(mode())
+    au InsertEnter * call s:ModeChanged(v:insertmode)
+    au InsertChange * call s:ModeChanged(v:insertmode)
+    au InsertLeave * call s:ModeChanged(mode())
+
+    vnoremap <expr> <SID>CursorLineNrColorVisual CursorLineNrColorVisual()
+    nnoremap <script> v v<SID>CursorLineNrColorVisual
+    nnoremap <script> V V<SID>CursorLineNrColorVisual
+    nnoremap <script> <C-v> <C-v><SID>CursorLineNrColorVisual
 endif
