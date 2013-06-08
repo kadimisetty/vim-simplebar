@@ -11,10 +11,11 @@ It's 2013 and your computer probably supports these anyway, but keep that in min
 
 
 ## Screenshots
-Solarized dark background
-![Dark Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/dark-screenshot.png)
-Solarized light background
-![Light Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/light-screenshot.png)
+Solarized Theme
+![Dark Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/dark2.png)
+
+Background set to Light
+![Light Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/light2.png)
 
 ## Elements
 To the left
