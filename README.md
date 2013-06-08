@@ -13,6 +13,8 @@ It's 2013 and your computer probably supports these anyway, but keep that in min
 Looks like this on my terminal. 
 Solarized theme on a dark background. 
 ![My image](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/sample.png)
+![Dark Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/dark-screenshot.png)
+![Light Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/light-screenshot.png)
 
 ## Elements
 To the left
