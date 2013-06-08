@@ -7,7 +7,7 @@
 " ============================================================================
 
 
-if exists("g:loaded_simplebar_plugin") || &compatible || v:versin < 700
+if exists("g:loaded_simplebar_plugin") || &compatible || v:version < 703
     finish
 endif
 let g:loaded_simplebar_plugin = 1
