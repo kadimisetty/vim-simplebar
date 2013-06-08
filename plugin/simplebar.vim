@@ -3,7 +3,7 @@
 " Description:  A simple non-attention-seeking Vim status line.
 " Maintainer:   Sri Kadimisetty <http://sri.io>
 " License:      GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
-" Version:      0.3.3
+" Version:      0.3.4
 " ============================================================================
 
 
@@ -60,7 +60,7 @@ function! FileEncoding()
     if &fenc !~ "^$\|utf-8" || &bomb
         return &fenc . (&bomb ? "-bom" : "" )
     else
-        return ""
+        return "e̶n̶c̶"
     endif
 endfunction
 
@@ -115,11 +115,11 @@ if has('statusline')
     " let &statusline.=" ψ master "
 
     " Show buffer number
-    let &statusline.=" %{PrettyBufferNumber(bufnr('%'))}"
+    let &statusline.="   %{PrettyBufferNumber(bufnr('%'))}  "
     " Filetype
-    let &statusline.=" %{strlen(&ft)?&ft:'no ft'}."
+    let &statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
     " File Format
-    let &statusline.="%{&ff}."
+    let &statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}."
     " File Encoding
     let &statusline.="%{FileEncoding()} "
     " Flags
