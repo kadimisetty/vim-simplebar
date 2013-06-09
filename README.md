@@ -6,8 +6,11 @@
 A simple non-attention-seeking Vim status line.
 
 
-Relies on Unicode support, which it being 2013 and all, your computer has
-anyway. But do keep that in mind.
+(Relies on Unicode support, which it being 2013 and all, your computer has
+anyway. But do keep that in mind.)
+
+
+Setup: iTerm w/ Solarized + Vim w/ solarized + simplebar 
 
 
 ## Screenshots
