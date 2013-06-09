@@ -14,8 +14,8 @@ endif
 let g:loaded_simplebar_plugin = 1
 
 "Dev settings
-nnoremap <leader>sl :call SetStatusLine()<CR>
-nnoremap <leader>st :source %<CR>
+" nnoremap <leader>sl :call SetStatusLine()<CR>
+" nnoremap <leader>st :source %<CR>
 
 "Always show the status bar
 set laststatus=2
@@ -55,7 +55,7 @@ function! PrettyCurrentMode()
     endif
 endfunction
 
-"Return file enoding used amd tell if theres a DOS bom
+"Return file encoding used amd report a DOS bom
 function! FileEncoding()
     if &fenc !~ "^$\|utf-8" || &bomb
         return (&fenc?&fenc:'e̶n̶c̶') . (&bomb ? "-bom" : "" )
@@ -67,6 +67,7 @@ endfunction
 " @TODO - Allow configurable option for buffer number style
 " Return Pretty Buffer Numbers
 function! PrettyBufferNumber(current_buffer_number)
+    " Couldn't find equally sized encircled-negative-numbers
     let l:encircled_numers_negative = [
                 \ "➊ ", "➋ ", "➌ ", "➍", "➎ ",
                 \ "➏ ", "➐ ", "➑", "➒ ", "➓ ",
@@ -93,9 +94,9 @@ function! PrettyBufferNumber(current_buffer_number)
     endif
 endfunction
 
-" Get Fugitive status and format it
+" Get current git branch from Fugitive
 function! FugitiveStatus(marker)
-    return substitute(fugitive#statusline(), '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', a:marker .' \1', 'g')
+    return '  ' . substitute(fugitive#statusline(), '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', a:marker .' \1', 'g')
 endfunction
 
 "Set the status line
@@ -145,7 +146,10 @@ if has('statusline')
     " Current Mode
     let &statusline.="%5*%2{PrettyCurrentMode()}  "
 
-    au InsertEnter * call ModeChanged(v:insertmode)
-    au InsertChange * call ModeChanged(v:insertmode)
-    au InsertLeave * call ModeChanged(mode())
+    augroup NoticeModeChanges
+        au!
+        au InsertEnter * call ModeChanged(v:insertmode)
+        au InsertChange * call ModeChanged(v:insertmode)
+        au InsertLeave * call ModeChanged(mode())
+    augroup END
 endif
