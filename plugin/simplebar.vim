@@ -18,11 +18,11 @@ nnoremap <leader>sl :call SetStatusLine()<CR>
 nnoremap <leader>st :source %<CR>
 
 "Always show the status bar
-set laststatus=2 
+set laststatus=2
 "let g:last_mode=""
 
 
-"Colors 
+"Colors
 hi default link User1 LineNr
 hi default link User2 Comment
 hi default link User3 Statement
@@ -35,7 +35,7 @@ function! ModeChanged(mode)
     elseif a:mode ==# "i"  | hi User5 ctermfg=Magenta       ctermbg=NONE cterm=bold
     elseif a:mode ==# "r"  | hi User5 ctermfg=DarkRed       ctermbg=NONE cterm=bold
     " @TODO: Visual Mode does not get triggered, need to find a way around it.
-    " elseif a:mode ==# "v" || a:mode ==# "V" || a:mode ==# "^V" 
+    " elseif a:mode ==# "v" || a:mode ==# "V" || a:mode ==# "^V"
     "                          hi User5 ctermfg=Blue          ctermbg=NONE cterm=bold
     else                   | hi User5 ctermfg=fg            ctermbg=NONE
     endif
@@ -71,7 +71,7 @@ function! PrettyBufferNumber(current_buffer_number)
                 \ "➊ ", "➋ ", "➌ ", "➍", "➎ ",
                 \ "➏ ", "➐ ", "➑", "➒ ", "➓ ",
                 \ "⓫", "⓬", "⓭", "⓮", "⓯",
-                \ "⓰", "⓱", "⓲", "⓳", "⓴", 
+                \ "⓰", "⓱", "⓲", "⓳", "⓴",
                 \  ]
     let l:bracketed_numbers = [
                 \ "⑴", "⑵", "⑶", "⑷", "⑸",
@@ -79,10 +79,10 @@ function! PrettyBufferNumber(current_buffer_number)
                 \ "⑾", "⑿", "⒀", "⒁", "⒂",
                 \ "⒃", "⒄", "⒅", "⒆", "⒇"
                 \ ]
-    let l:encircled_numbers = [ 
+    let l:encircled_numbers = [
                 \ "①", "②", "③", "④", "⑤",
-                \ "⑥", "⑦", "⑧", "⑨", "⑩", 
-                \ "⑪", "⑫", "⑬", "⑭", "⑮", 
+                \ "⑥", "⑦", "⑧", "⑨", "⑩",
+                \ "⑪", "⑫", "⑬", "⑭", "⑮",
                 \ "⑯", "⑰", "⑱", "⑲", "⑳"
                 \ ]
     let l:pretty_numbers = l:encircled_numbers
@@ -93,6 +93,10 @@ function! PrettyBufferNumber(current_buffer_number)
     endif
 endfunction
 
+" Get Fugitive status and format it
+function! FugitiveStatus(marker)
+    return substitute(fugitive#statusline(), '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', a:marker .' \1', 'g')
+endfunction
 
 "Set the status line
 if has('statusline')
@@ -108,15 +112,17 @@ if has('statusline')
 
     " @TODO - Set Read-only flag and show with 🚫
 
-    " Switch color to the Comment highlight group 
+    " Switch color to the Comment highlight group
     let &statusline.="%2*"
-    
-    " @TODO: Fugitive support to get curent branch name etc.
-    " let &statusline.=" ψ master "
+
+    " Current git branch
+    if exists("g:loaded_fugitive") && g:loaded_fugitive == 1
+      let &statusline.="%{FugitiveStatus('ψ')}"
+    endif
 
     " Show buffer number
     let &statusline.="  %{PrettyBufferNumber(bufnr('%'))}  "
-    
+
     " Filetype
     let &statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
     " File Encoding
@@ -124,8 +130,8 @@ if has('statusline')
     " File Format
     let &statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}"
     " Flags
-    let &statusline.=" %h%r%w " 
-    
+    let &statusline.=" %h%r%w "
+
     " Right Align From Here
     let &statusline.="%= "
     " Current position as a percentage and total line numbers
