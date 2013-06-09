@@ -19,7 +19,7 @@ Solarized Theme
 
 Background set to light
 ![Light Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/light2.png)
-
+The encoding is struck through because it hasn't been set here.
 
 ## Elements
 To the left
