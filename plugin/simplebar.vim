@@ -58,7 +58,7 @@ endfunction
 "Return file encoding used amd report a DOS bom
 function! FileEncoding()
     if &fenc !~ "^$\|utf-8" || &bomb
-        return (&fenc?&fenc:'e̶n̶c̶') . (&bomb ? "-bom" : "" )
+        return (&fenc!=#''?&fenc:'e̶n̶c̶') . (&bomb ? "-bom" : "" )
     else
         return ""
     endif
