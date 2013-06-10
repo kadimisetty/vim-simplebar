@@ -96,7 +96,11 @@ endfunction
 
 " Get current git branch from Fugitive
 function! FugitiveStatus(marker)
-    return '  ' . substitute(fugitive#statusline(), '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', a:marker .' \1', 'g')
+    if exists("g:loaded_fugitive") && g:loaded_fugitive == 1
+        return '  ' . substitute(fugitive#statusline(), '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', a:marker .' \1', 'g')
+    else
+        return ''
+    endif
 endfunction
 
 "Set the status line
@@ -117,9 +121,7 @@ if has('statusline')
     let &statusline.="%2*"
 
     " Current git branch
-    if exists("g:loaded_fugitive") && g:loaded_fugitive == 1
-      let &statusline.="%{FugitiveStatus('ψ')}"
-    endif
+    let &statusline.="%{FugitiveStatus('ψ')}"
 
     " Show buffer number
     let &statusline.="  %{PrettyBufferNumber(bufnr('%'))}  "
