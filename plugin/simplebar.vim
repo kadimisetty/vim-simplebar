@@ -67,31 +67,15 @@ endfunction
 " @TODO - Allow configurable option for buffer number style
 " Return Pretty Buffer Numbers
 function! PrettyBufferNumber(current_buffer_number)
-    " Couldn't find equally sized encircled-negative-numbers
-    let l:encircled_numers_negative = [
-                \ "➊ ", "➋ ", "➌ ", "➍", "➎ ",
-                \ "➏ ", "➐ ", "➑", "➒ ", "➓ ",
-                \ "⓫", "⓬", "⓭", "⓮", "⓯",
-                \ "⓰", "⓱", "⓲", "⓳", "⓴",
-                \  ]
-    let l:bracketed_numbers = [
-                \ "⑴", "⑵", "⑶", "⑷", "⑸",
-                \ "⑹", "⑺", "⑻", "⑼", "⑽",
-                \ "⑾", "⑿", "⒀", "⒁", "⒂",
-                \ "⒃", "⒄", "⒅", "⒆", "⒇"
-                \ ]
-    let l:encircled_numbers = [
-                \ "①", "②", "③", "④", "⑤",
-                \ "⑥", "⑦", "⑧", "⑨", "⑩",
-                \ "⑪", "⑫", "⑬", "⑭", "⑮",
-                \ "⑯", "⑰", "⑱", "⑲", "⑳"
-                \ ]
-    let l:pretty_numbers = l:encircled_numbers
-    if a:current_buffer_number < len(l:pretty_numbers)
-        return l:pretty_numbers[a:current_buffer_number-1]
-    else
-        return a:current_buffer_number
-    endif
+    let l:small_numbers = ["₀", "₁", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉"]
+    let l:result = ""
+    let l:current_buffer_number_str = string(a:current_buffer_number)
+
+    for i in range(0, len(l:current_buffer_number_str) - 1)
+      let l:result .= l:small_numbers[str2nr(l:current_buffer_number_str[i])]
+    endfor
+
+    return l:result
 endfunction
 
 " Get current git branch from Fugitive
@@ -113,7 +97,7 @@ if has('statusline')
     " File name
     let &statusline.=" %20f"
     " Modified Buffer?
-    let &statusline.="\ %{&modified==0?'':'✏'} "
+    let &statusline.="\ %{&modified==0?'':'+'} "
 
     " @TODO - Set Read-only flag and show with 🚫
 
