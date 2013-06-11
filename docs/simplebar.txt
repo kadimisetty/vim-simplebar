@@ -1,18 +1,17 @@
-*simplebar.txt*	A simple non-attention-seeking Vim status line.
-*simplebar*
+*simplebar.txt*	    For Vim version 7.3	    Last change: 2010 June 10
 
 
----------
+.........
 simplebar
----------
+.........
 
+A simple non-attention-seeking Vim status line.
 
-A status line that is visually light and provides details of
-contextual relevance.
 
 This plugin currently uses unicode characters and as such will
 depend on a font with proper unicode character support in order
 to function smoothly.
+
 
 =============================================================================
 CONTENTS
