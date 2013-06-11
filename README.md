@@ -15,26 +15,27 @@ Setup: iTerm w/ Solarized + Vim w/ solarized + simplebar
 
 ## Screenshots
 Solarized Theme
-![Dark Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/dark2.png)
+![Dark Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/dark3.png)
 
-Background set to light
-![Light Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/light2.png)
-The encoding is struck through because it hasn't been set here.
+With a light background
+![Light Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/light3.png)
+
 
 ## Elements
 To the left
 * Filename 
-* Buffer #
+* git branch
 * filetype.encoding.format
+* Buffer #
 
 To the right
 * Line Count & Position %
 * Columns & Row 
-* Coloured Mode
+* Mode
 
 
 ##Requirements
-Work on Vim 7.3, iTerm & OS X Mountain Lion
+Tested on Vim 7.3, iTerm & OS X Mountain Lion
 
 
 ## Installation
@@ -45,7 +46,7 @@ To do it manually, place `./plugin/simplebar.vim` in your `~/.vim/plugins` direc
 
 ## Notes
 Alternatives & Inspiration:
-* Vim Poweline
+* Powerline
 * NeatStatus etc.
 
 
