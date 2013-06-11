@@ -1,35 +1,31 @@
 " ============================================================================
 " File:         simplebar.vim
-" Description:  A simple non-attention-seeking Vim status line.
+" Description:  A simple non-attention-seeking status line.
 " Maintainer:   Sri Kadimisetty <http://sri.io>
 " License:      GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
-" Version:      0.3.5
+" Version:      0.3.6
 " ============================================================================
 
 
-if exists("g:loaded_simplebar_plugin") || &compatible || v:version < 700
-    echo "needs to be above or equal to version 7.3"
+if exists("g:loaded_simplebar_plugin") || &compatible || v:version < 703
     finish
 endif
 let g:loaded_simplebar_plugin = 1
 
-"Dev settings
-" nnoremap <leader>sl :call SetStatusLine()<CR>
-" nnoremap <leader>st :source %<CR>
 
-"Always show the status bar
+" Show the status bar
 set laststatus=2
 "let g:last_mode=""
 
 
-"Colors
+" Color groups (Prefereably linked to an existing highlight group)
 hi default link User1 LineNr
 hi default link User2 Comment
 hi default link User3 Statement
 hi User5 ctermfg=LightGreen ctermbg=NONE cterm=bold
 
 
-" Change the User1 highlight group values based on mode
+" Custom highlight color group that is called when modes change
 function! ModeChanged(mode)
     if     a:mode ==# "n"  | hi User5 ctermfg=LightGreen    ctermbg=NONE cterm=bold
     elseif a:mode ==# "i"  | hi User5 ctermfg=Magenta       ctermbg=NONE cterm=bold
@@ -42,7 +38,7 @@ function! ModeChanged(mode)
 endfunction
 
 
-"Use a symbol to indicate few modes
+" Return modes as shorter symbols
 function! PrettyCurrentMode()
     let l:currentnode = mode()
     if l:currentnode ==# 'n'      | return "ⓝ"
@@ -55,7 +51,8 @@ function! PrettyCurrentMode()
     endif
 endfunction
 
-"Return file encoding used amd report a DOS bom
+
+"Return file encoding used and whether DOS-BOMs exist in file
 function! FileEncoding()
     if &fenc !~ "^$\|utf-8" || &bomb
         return (&fenc!=#''?&fenc:'e̶n̶c̶') . (&bomb ? "-bom" : "" )
@@ -64,8 +61,9 @@ function! FileEncoding()
     endif
 endfunction
 
-" @TODO - Allow configurable option for buffer number style
-" Return Pretty Buffer Numbers
+
+" @TODO - Make buffer-number-style customisable
+" Return buffer number made prettier
 function! PrettyBufferNumber(current_buffer_number)
     let l:small_numbers = ["₀", "₁", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉"]
     let l:result = ""
@@ -78,6 +76,7 @@ function! PrettyBufferNumber(current_buffer_number)
     return l:result
 endfunction
 
+
 " Get current git branch from Fugitive
 function! FugitiveStatus(marker)
     if exists("g:loaded_fugitive") && g:loaded_fugitive == 1
@@ -87,28 +86,27 @@ function! FugitiveStatus(marker)
     endif
 endfunction
 
+
 "Set the status line
 if has('statusline')
     let &statusline=""
-    " Switch color to the LineNr highlight group
+    " Switch color to the User1 highlight group
     let &statusline.="%1*"
-    " let &statusline.="  ⒙" | "🚫
-    " @TODO: %L matched with gutter width + fold column width
+    " @TODO: 
+    "       Use slot in statusline.gutter (spaced equal to gutter-width + foldcolumn-width)
+    "       to either show total-lines or buf-number
+
     " File name
     let &statusline.=" %20f"
-    " Modified Buffer?
+    " Buffer Modified?
     let &statusline.="\ %{&modified==0?'':'+'} "
 
     " @TODO - Set Read-only flag and show with 🚫
-
-    " Switch color to the Comment highlight group
+    " Switch color to the User2 highlight group
     let &statusline.="%2*"
 
     " Current git branch
-    let &statusline.="%{FugitiveStatus('ψ')}"
-
-    " Show buffer number
-    let &statusline.="  %{PrettyBufferNumber(bufnr('%'))}  "
+    let &statusline.="%{FugitiveStatus('ψ')}  "
 
     " Filetype
     let &statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
@@ -119,15 +117,20 @@ if has('statusline')
     " Flags
     let &statusline.=" %h%r%w "
 
+    " Show buffer number
+    let &statusline.="%{PrettyBufferNumber(bufnr('%'))}  "
+
     " Right Align From Here
     let &statusline.="%= "
-    " Current position as a percentage and total line numbers
+
+    " Location as- total-number-of-lines and current-line-pos-as-percentage
     let &statusline.="↕%L·%p"
-    " Show location unicode symbol
+    " Show location wit a fancy unicode symbol.
     let &statusline.="📍 "
     " Column & Line Positon
     let &statusline.="%(%c·%l%)"
-    " Switch color to the Comment highlight group
+
+    " Switch color to the User3 highlight group
     let &statusline.="%3*"
     " Current Mode
     let &statusline.="%5*%2{PrettyCurrentMode()}  "
