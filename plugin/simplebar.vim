@@ -18,11 +18,16 @@ set laststatus=2
 "let g:last_mode=""
 
 
-" Color groups (Prefereably linked to an existing highlight group)
+" Color groups 
+" (Prefereably linked to an existing highlight group)
 hi default link User1 LineNr
 hi default link User2 Comment
 hi default link User3 Statement
+"Modes
 hi User5 ctermfg=LightGreen ctermbg=NONE cterm=bold
+"Unfocussed windows
+hi default link User7 Visual
+
 
 
 " Custom highlight color group that is called when modes change
@@ -86,59 +91,85 @@ function! FugitiveStatus(marker)
     endif
 endfunction
 
-
-"Set the status line
-if has('statusline')
-    let &statusline=""
+"To be applied to windows in focus
+function! SetStatusLine()
+    let &l:statusline=""
     " Switch color to the User1 highlight group
-    let &statusline.="%1*"
+    let &l:statusline.="%1*"
     " @TODO: 
     "       Use slot in statusline.gutter (spaced equal to gutter-width + foldcolumn-width)
     "       to either show total-lines or buf-number
 
     " File name
-    let &statusline.=" %20f"
+    let &l:statusline.=" %20f"
     " Buffer Modified?
-    let &statusline.="\ %{&modified==0?'':'+'} "
+    let &l:statusline.="\ %{&modified==0?'':'+'} "
 
     " @TODO - Set Read-only flag and show with 🚫
     " Switch color to the User2 highlight group
-    let &statusline.="%2*"
+    let &l:statusline.="%2*"
 
     " Current git branch
-    let &statusline.="%{FugitiveStatus('ψ')}  "
+    let &l:statusline.="%{FugitiveStatus('ψ')}  "
 
     " Filetype
-    let &statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
+    let &l:statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
     " File Encoding
-    let &statusline.="%{FileEncoding()}."
+    let &l:statusline.="%{FileEncoding()}."
     " File Format
-    let &statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}"
+    let &l:statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}"
     " Flags
-    let &statusline.=" %h%r%w "
+    let &l:statusline.=" %h%r%w "
 
     " Show buffer number
-    let &statusline.="%{PrettyBufferNumber(bufnr('%'))}  "
+    let &l:statusline.="%{PrettyBufferNumber(bufnr('%'))}  "
 
     " Right Align From Here
-    let &statusline.="%= "
+    let &l:statusline.="%= "
 
     " Location as- total-number-of-lines and current-line-pos-as-percentage
-    let &statusline.="↕%L·%p"
+    let &l:statusline.="↕%L·%p"
     " Show location wit a fancy unicode symbol.
-    let &statusline.="📍 "
+    let &l:statusline.="📍 "
     " Column & Line Positon
-    let &statusline.="%(%c·%l%)"
+    let &l:statusline.="%(%c·%l%)"
 
     " Switch color to the User3 highlight group
-    let &statusline.="%3*"
+    let &l:statusline.="%3*"
     " Current Mode
-    let &statusline.="%5*%2{PrettyCurrentMode()}  "
+    let &l:statusline.="%5*%2{PrettyCurrentMode()}  "
 
     augroup NoticeModeChanges
         au!
         au InsertEnter * call ModeChanged(v:insertmode)
         au InsertChange * call ModeChanged(v:insertmode)
         au InsertLeave * call ModeChanged(mode())
+    augroup END
+endfunction
+
+
+"To be applied to windows that have lost focus
+function! SetUnfocussedStatusLine()
+    let &l:statusline=""
+    " Switch color to the User1 highlight group
+    let &l:statusline.="%7*"
+
+    " File name
+    let &l:statusline.=" %20f"
+    " Buffer Modified?
+    let &l:statusline.="\ %{&modified==0?'':'+'} "
+    " Show buffer number
+    let &l:statusline.="%{PrettyBufferNumber(bufnr('%'))}  "
+endfunction
+
+
+"Set the status line
+if has('statusline')
+    call SetStatusLine()
+
+    augroup FocusAndUnfocussedStatusLineChanges
+        au!
+        au WinLeave * call SetUnfocussedStatusLine()
+        au WinEnter * call SetStatusLine()
     augroup END
 endif
