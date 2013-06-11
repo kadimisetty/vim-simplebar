@@ -25,9 +25,24 @@ hi default link User2 Comment
 hi default link User3 Statement
 "Modes
 hi User5 ctermfg=LightGreen ctermbg=NONE cterm=bold
-"Unfocussed windows
-hi default link User7 Visual
+"
+"Unfocussed windows:
+" "Need to get the colors from the line number per current colorscheme,
+" "erroring out w/ this method though
+" let line_num_bg = synIDattr(synIDtrans((hlID("LineNr")), "bg")
+" let line_num_fg = synIDattr(synIDtrans((hlID("LineNr")), "fg")
+" execute 'hi User7 ctermbg='.  line_num_bg 'ctermbg='.  line_num_fg .  'cterm=UNDERLINE'
+" "So copping out - hardcoding solarized's colors
+if &background ==# "dark" 
+    hi User7 ctermbg=0 ctermfg=10 | "cterm=UNDERLINE
+else
+    hi User7 ctermbg=7 ctermfg=14 | "cterm=UNDERLINE
 
+endif
+
+" line_num_bg = str2nr(synIDattr(synIDtrans((hlID("LineNr")), "bg"))
+" line_num_fg = str2nr(synIDattr(synIDtrans((hlID("LineNr")), "fg"))
+" hi User7 ctermbg=line_num_bg ctermfg=line_num_fg cterm=UNDERLINE
 
 
 " Custom highlight color group that is called when modes change
