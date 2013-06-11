@@ -15,10 +15,10 @@ Setup: iTerm w/ Solarized + Vim w/ solarized + simplebar
 
 ## Screenshots
 Solarized Theme
-![Dark Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/dark3.png)
+![Dark Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/doc/source/dark3.png)
 
 With a light background
-![Light Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/docs/source/light3.png)
+![Light Background Screenshot](https://raw.github.com/kadimisetty/vim-simplebar/master/doc/source/light3.png)
 
 
 ## Elements
