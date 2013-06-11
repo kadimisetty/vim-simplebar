@@ -25,7 +25,7 @@ hi default link User2 Comment
 hi default link User3 Statement
 "Modes
 hi User5 ctermfg=LightGreen ctermbg=NONE cterm=bold
-"
+
 "Unfocussed windows:
 " "Need to get the colors from the line number per current colorscheme,
 " "erroring out w/ this method though
@@ -35,8 +35,10 @@ hi User5 ctermfg=LightGreen ctermbg=NONE cterm=bold
 " "So copping out - hardcoding solarized's colors
 if &background ==# "dark" 
     hi User7 ctermbg=0 ctermfg=10 | "cterm=UNDERLINE
+    hi VertSplit ctermbg=0 ctermfg=NONE
 else
     hi User7 ctermbg=7 ctermfg=14 | "cterm=UNDERLINE
+    hi VertSplit ctermbg=7 ctermfg=NONE
 
 endif
 
@@ -180,6 +182,14 @@ endfunction
 
 "Set the status line
 if has('statusline')
+    " 1. Set up the vertical split, with pure color
+    set fillchars=vert:\ 
+    
+    " 2. Clean up the NonText highlight group
+    hi NonText ctermbg=NONE ctermfg=bg
+
+
+    " 3. Set the Status Line
     call SetStatusLine()
 
     augroup FocusAndUnfocussedStatusLineChanges
