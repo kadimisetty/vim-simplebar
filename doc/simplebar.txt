@@ -8,9 +8,9 @@ simplebar
 A simple non-attention-seeking Vim status line.
 
 
-This plugin currently uses unicode characters and as such will
-depend on a font with proper unicode character support in order
-to function smoothly.
+This plugin currently uses unicode characters and
+as such will depend on a font with proper unicode
+character support in order to function smoothly.
 
 
 =============================================================================
@@ -26,34 +26,39 @@ CONTENTS
 =============================================================================
 0. Install                              *simplebar-install*
 
-You may use Vim plugin managers such as Vundle and Pathogen to
-install simplebar.  
+You may use Vim plugin managers such as Vundle and
+Pathogen to install simplebar.
 
-In order to install manually, download the package and move the file
-`plugin/simplebar.vim` to your `.vim/plugins` directory.
+In order to install manually, download the package
+and move the file `plugin/simplebar.vim` to your
+`.vim/plugins` directory.
 
 =============================================================================
 1. License                              *simplebar-license*
 
-GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
+GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29
+June 2007
 
 =============================================================================
 2. Usage                                *simplebar-license*
 
-When the plugin is loaded by Vim, the statusline should be loaded
-automatically.
+When the plugin is loaded by Vim, the statusline
+should be loaded automatically.
 
 =============================================================================
 3. Bugs                                 *simplebar-bugs*
 
-If there are any bugs, please report them at the issue tracker:
-https://github.com/kadimisetty/vim-simplebar/issues
+If there are any bugs, please
+report them at the issue tracker:
+https://github.com/kadimisetty/vim-simplebar/issue
+s
 
 =============================================================================
 4. Contributing                         *simplebar-contributing*
 
-There's always scope for improvement. If you feel like adding, fork the
-following repository and send a pull request.
+There's always scope for improvement. If
+you feel like adding, fork the following
+repository and send a pull request.
 https://github.com/kadimisetty/vim-simplebar
 
 =============================================================================

@@ -6,11 +6,13 @@
 A simple non-attention-seeking Vim status line.
 
 
-(Relies on Unicode support, which it being 2013 and all, your computer has
+(Relies on fonts with unicode support, which it
+being 2013 and all, most good fonts computer have
 anyway. But do keep that in mind.)
 
 
-Setup: iTerm w/ Solarized + Vim w/ solarized + simplebar 
+Setup: iTerm w/ Solarized + Vim w/ solarized +
+simplebar
 
 
 ## Screenshots
@@ -39,9 +41,11 @@ Tested on Vim 7.3, iTerm & OS X Mountain Lion
 
 
 ## Installation
-Use your favorite installation method. I suggest Vundle or Pathogen.
+Use your favorite installation method. I suggest
+Vundle or Pathogen.
 
-To do it manually, place `./plugin/simplebar.vim` in your `~/.vim/plugins` directory.
+To do it manually, place `./plugin/simplebar.vim`
+in your `~/.vim/plugins` directory.
 
 
 ## Notes

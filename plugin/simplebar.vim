@@ -3,7 +3,7 @@
 " Description:  A simple non-attention-seeking status line.
 " Maintainer:   Sri Kadimisetty <http://sri.io>
 " License:      GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
-" Version:      0.3.6
+" Version:      0.3.8
 " ============================================================================
 
 
