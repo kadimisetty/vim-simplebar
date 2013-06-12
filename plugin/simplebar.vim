@@ -108,6 +108,67 @@ function! FugitiveStatus(marker)
     endif
 endfunction
 
+
+"To be applied to windows in focus
+function! SetInitialStatusLine()
+    let statusline=""
+    " Switch color to the User1 highlight group
+    let statusline.="%1*"
+    " @TODO: 
+    "       Use slot in statusline.gutter (spaced equal to gutter-width + foldcolumn-width)
+    "       to either show total-lines or buf-number
+
+    " File name
+    let statusline.=" %20f"
+    " Buffer Modified?
+    let statusline.="\ %{&modified==0?'':'+'} "
+
+    " @TODO - Set Read-only flag and show with 🚫
+    " Switch color to the User2 highlight group
+    let statusline.="%2*"
+
+    " Current git branch
+    let statusline.="%{FugitiveStatus('ψ')}  "
+
+    " Filetype
+    let statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
+    " File Encoding
+    let statusline.="%{FileEncoding()}."
+    " File Format
+    let statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}"
+    " Flags
+    let statusline.=" %h%r%w "
+
+    " Show buffer number
+    let statusline.="%{PrettyBufferNumber(bufnr('%'))}  "
+
+    " Right Align From Here
+    let statusline.="%= "
+
+    " Location as- total-number-of-lines and current-line-pos-as-percentage
+    let statusline.="↕%L·%p"
+    " Show location wit a fancy unicode symbol.
+    let statusline.="📍 "
+    " Column & Line Positon
+    let statusline.="%(%c·%l%)"
+
+    " Switch color to the User3 highlight group
+    let statusline.="%3*"
+    " Current Mode
+    let statusline.="%5*%2{PrettyCurrentMode()}  "
+
+    augroup NoticeModeChanges
+        au!
+        au InsertEnter * call ModeChanged(v:insertmode)
+        au InsertChange * call ModeChanged(v:insertmode)
+        au InsertLeave * call ModeChanged(mode())
+    augroup END
+endfunction
+
+
+
+
+
 "To be applied to windows in focus
 function! SetStatusLine()
     let &l:statusline=""
@@ -156,12 +217,12 @@ function! SetStatusLine()
     " Current Mode
     let &l:statusline.="%5*%2{PrettyCurrentMode()}  "
 
-    augroup NoticeModeChanges
-        au!
-        au InsertEnter * call ModeChanged(v:insertmode)
-        au InsertChange * call ModeChanged(v:insertmode)
-        au InsertLeave * call ModeChanged(mode())
-    augroup END
+    " augroup NoticeModeChanges
+    "     au!
+    "     au InsertEnter * call ModeChanged(v:insertmode)
+    "     au InsertChange * call ModeChanged(v:insertmode)
+    "     au InsertLeave * call ModeChanged(mode())
+    " augroup END
 endfunction
 
 
@@ -184,13 +245,11 @@ endfunction
 if has('statusline')
     " 1. Set up the vertical split, with pure color
     set fillchars=vert:\ 
-    
     " 2. Clean up the NonText highlight group
     hi NonText ctermbg=NONE ctermfg=bg
 
-
-    " 3. Set the Status Line
-    call SetStatusLine()
+    " 3. Set Initial Status Line
+    call SetInitialStatusLine()
 
     augroup FocusAndUnfocussedStatusLineChanges
         au!
