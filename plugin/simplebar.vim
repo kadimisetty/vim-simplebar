@@ -109,53 +109,53 @@ function! FugitiveStatus(marker)
 endfunction
 
 
-"To be applied to windows in focus
+"Starts initially
 function! SetInitialStatusLine()
-    let statusline=""
+    let &g:statusline=""
     " Switch color to the User1 highlight group
-    let statusline.="%1*"
+    let &g:statusline.="%1*"
     " @TODO: 
     "       Use slot in statusline.gutter (spaced equal to gutter-width + foldcolumn-width)
     "       to either show total-lines or buf-number
 
     " File name
-    let statusline.=" %20f"
+    let &g:statusline.=" %20f"
     " Buffer Modified?
-    let statusline.="\ %{&modified==0?'':'+'} "
+    let &g:statusline.="\ %{&modified==0?'':'+'} "
 
     " @TODO - Set Read-only flag and show with 🚫
     " Switch color to the User2 highlight group
-    let statusline.="%2*"
+    let &g:statusline.="%2*"
 
     " Current git branch
-    let statusline.="%{FugitiveStatus('ψ')}  "
+    let &g:statusline.="%{FugitiveStatus('ψ')}  "
 
     " Filetype
-    let statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
+    let &g:statusline.="%{strlen(&ft)?&ft:'t̶y̶p̶e̶'}."
     " File Encoding
-    let statusline.="%{FileEncoding()}."
+    let &g:statusline.="%{FileEncoding()}."
     " File Format
-    let statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}"
+    let &g:statusline.="%{strlen(&ff)?&ff:'f̶o̶r̶m̶a̶t̶'}"
     " Flags
-    let statusline.=" %h%r%w "
+    let &g:statusline.=" %h%r%w "
 
     " Show buffer number
-    let statusline.="%{PrettyBufferNumber(bufnr('%'))}  "
+    let &g:statusline.="%{PrettyBufferNumber(bufnr('%'))}  "
 
     " Right Align From Here
-    let statusline.="%= "
+    let &g:statusline.="%= "
 
     " Location as- total-number-of-lines and current-line-pos-as-percentage
-    let statusline.="↕%L·%p"
+    let &g:statusline.="↕%L·%p"
     " Show location wit a fancy unicode symbol.
-    let statusline.="📍 "
+    let &g:statusline.="📍 "
     " Column & Line Positon
-    let statusline.="%(%c·%l%)"
+    let &g:statusline.="%(%c·%l%)"
 
     " Switch color to the User3 highlight group
-    let statusline.="%3*"
+    let &g:statusline.="%3*"
     " Current Mode
-    let statusline.="%5*%2{PrettyCurrentMode()}  "
+    let &g:statusline.="%5*%2{PrettyCurrentMode()}  "
 
     augroup NoticeModeChanges
         au!
@@ -217,12 +217,12 @@ function! SetStatusLine()
     " Current Mode
     let &l:statusline.="%5*%2{PrettyCurrentMode()}  "
 
-    " augroup NoticeModeChanges
-    "     au!
-    "     au InsertEnter * call ModeChanged(v:insertmode)
-    "     au InsertChange * call ModeChanged(v:insertmode)
-    "     au InsertLeave * call ModeChanged(mode())
-    " augroup END
+    augroup NoticeModeChanges
+        au!
+        au InsertEnter * call ModeChanged(v:insertmode)
+        au InsertChange * call ModeChanged(v:insertmode)
+        au InsertLeave * call ModeChanged(mode())
+    augroup END
 endfunction
 
 
