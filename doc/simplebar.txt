@@ -40,7 +40,7 @@ GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29
 June 2007
 
 =============================================================================
-2. Usage                                *simplebar-license*
+2. Usage                                *simplebar-usage*
 
 When the plugin is loaded by Vim, the statusline
 should be loaded automatically.
