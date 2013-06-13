@@ -53,8 +53,7 @@ should be loaded automatically.
 
 If there are any bugs, please
 report them at the issue tracker:
-https://github.com/kadimisetty/vim-simplebar/issue
-s
+https://github.com/kadimisetty/vim-simplebar/issues
 
 =============================================================================
 4. Contributing                         *simplebar-contributing*
