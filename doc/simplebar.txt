@@ -1,9 +1,12 @@
 *simplebar.txt*	    For Vim version 7.3	    Last change: 2010 June 10
 
 
-.........
-simplebar
-.........
+                .      .           
+,-. . ,-,-. ,-. |  ,-. |-. ,-. ,-. 
+`-. | | | | | | |  |-' | | ,-| |   
+`-' ' ' ' ' |-' `' `-' ^-' `-^ '   
+            |                      
+            '                      
 
 A simple non-attention-seeking Vim status line.
 
