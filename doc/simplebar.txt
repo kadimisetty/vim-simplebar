@@ -66,6 +66,6 @@ https://github.com/kadimisetty/vim-simplebar
 =============================================================================
 4. Requirements                         *simplebar-requirements*
 
-This plugin requires 'compatible' to be set.
+This plugin requires 'nocompatible' to be set.
 
  vim:tw=78:noet:ts=8:ft=help:norl:
